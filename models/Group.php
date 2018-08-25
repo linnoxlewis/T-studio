@@ -2,17 +2,16 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "group".
+ * Модель таблицы "group".
  *
  * @property int $id
  * @property string $name
  *
  * @property Student[] $students
- * @property StudentGroupeCourseWithTeacher[] $studentGroupeCourseWithTeachers
+ * @property nominatedCourses[] $studentGroupeCourseWithTeachers
  */
 class Group extends ActiveRecord
 {
@@ -30,9 +29,22 @@ class Group extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string', 'max' => 255],
-            [['name'],'unique','message'=>"группа уже существует"]
+
+            [
+                ['name'],
+                'required',
+                'message'=> '{attribute} не может быть пустым'
+            ],
+            [
+                ['name'],
+                'string',
+                'max' => 255
+            ],
+            [
+                ['name'],
+                'unique',
+                'message'=>"группа уже существует"
+            ]
         ];
     }
 
@@ -59,7 +71,7 @@ class Group extends ActiveRecord
      */
     public function getStudentGroupeCourseWithTeachers()
     {
-        return $this->hasMany(StudentGroupeCourseWithTeacher::className(), ['groupId' => 'id']);
+        return $this->hasMany(nominatedCourses::className(), ['groupId' => 'id']);
     }
 
     /**
@@ -69,6 +81,21 @@ class Group extends ActiveRecord
      */
     public static function getGroups()
     {
-        return self::find()->all();
+        return static::find()->all();
+    }
+
+    /**
+     * Поиск группы по его id.
+     *
+     * @param int $groupId id группы.
+     *
+     * @return array|ActiveRecord[]
+     */
+    public static function getGroup(int $groupId)
+    {
+        return static::find()
+            ->where([
+                'id'=>$groupId
+            ])->all();
     }
 }

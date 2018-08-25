@@ -7,15 +7,11 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\SearchStudent */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Студенты';
+$this->title = 'Студенты в группе';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="student-index">
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Добавить студента', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,10 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'surname',
             'groupId',
             'columns' => [
-                'label'=>'Фото',
+                'label' => 'Фото',
                 'format' => 'raw',
-                'value' => function($data){
-                    if($data->photo !=="") {
+                'value' => function ($data) {
+                    if ($data->photo !== "") {
                         return Html::img(($data->photo), [
                             'alt' => 'фото',
                             'style' => 'width:180px;height:150px'
@@ -40,5 +36,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

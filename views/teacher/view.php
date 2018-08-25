@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Teacher */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Teachers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Преподаватели', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="teacher-view">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Выуверены что хотите удалить преподователя?',
+                'confirm' => 'Выуверены что хотите удалить преподавателя?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -32,5 +32,4 @@ $this->params['breadcrumbs'][] = $this->title;
             'surname',
         ],
     ]) ?>
-
 </div>

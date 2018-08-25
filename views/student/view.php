@@ -33,17 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'groupId',
             'columns' => [
                 'label'=>'Фото',
-                'format' => 'image',
-                'value' => function($data) { return $data->photo; },
+                'format' => 'raw',
+                'value' => function($data){
+                    if($data->photo !=="") {
+                        return Html::img(($data->photo), [
+                            'alt' => 'фото',
+                            'style' => 'width:180px;height:150px'
+                        ]);
+                    } else {
+                        return "Фото отсутствует" ;
+                    }
+                },
             ],
         ],
     ]) ?>
-
 </div>
-
-<style>
-    img{
-        width: 180px;
-        height: 150px;
-    }
-</style>

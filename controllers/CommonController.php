@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CommonController implements the CRUD actions for some of models.
+ * Базовый контроллер для CRUD операций.
  */
 abstract class CommonController extends Controller
 {
@@ -81,7 +81,6 @@ abstract class CommonController extends Controller
 
     /**
      * Обновляет текущую запись модели.
-     * Если результат создания успешный, будет редирект на 'view' или 'index' страницу.
      *
      * @param int $id
      *
@@ -117,7 +116,6 @@ abstract class CommonController extends Controller
 
     /**
      * Находит модель.
-     * Если модель не найдена, вудет отображено 404 HTTP исключение.
      *
      * @param int $id
      *
@@ -138,7 +136,7 @@ abstract class CommonController extends Controller
             return $result;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException('Страница не найдена.');
     }
 
     /**

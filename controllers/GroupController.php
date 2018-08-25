@@ -6,7 +6,7 @@ use app\models\Group;
 use app\models\SearchGroup;
 
 /**
- * StudentController implements the CRUD actions for Student model.
+ * Контроллер для работы с группами.
  */
 class GroupController extends CommonController
 {

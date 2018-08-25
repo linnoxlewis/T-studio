@@ -7,7 +7,7 @@ use app\models\SearchCourse;
 
 
 /**
- * CourseController implements the CRUD actions for Student model.
+ * Контроллер для работы с курсами.
  */
 class CourseController extends CommonController
 {

@@ -2,13 +2,15 @@
 
 namespace app\models;
 
+
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
+
 /**
- * Поисковая модель групп.
+ * Поисковая модель занятий
  */
-class SearchGroup extends Group
+class SearchNominatedCourses extends NominatedCourses
 {
     /**
      * @inheritdoc
@@ -16,8 +18,10 @@ class SearchGroup extends Group
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['name'], 'safe'],
+            [
+                ['id', 'teacherId', 'groupId', 'courseId','statusId'],
+                'integer'
+            ],
         ];
     }
 
@@ -30,7 +34,7 @@ class SearchGroup extends Group
     }
 
     /**
-     * Создание датапровайдера.
+     * Создание датапровайдера
      *
      * @param array $params
      *
@@ -38,7 +42,7 @@ class SearchGroup extends Group
      */
     public function search($params)
     {
-        $query = Group::find();
+        $query = nominatedCourses::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -52,9 +56,11 @@ class SearchGroup extends Group
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'teacherId' => $this->teacherId,
+            'groupId' => $this->groupId,
+            'courseId' => $this->courseId,
+            'statusId' => $this->statusId
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

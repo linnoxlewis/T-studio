@@ -2,18 +2,18 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "teacher".
+ * Модель таблицы "teacher".
  *
  * @property int $id
  * @property string $name
  * @property string $surname
  *
- * @property StudentGroupeCourseWithTeacher[] $studentGroupeCourseWithTeachers
+ * @property NominatedCourses $studentGroupeCourseWithTeachers
  */
-class Teacher extends \yii\db\ActiveRecord
+class Teacher extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -29,7 +29,16 @@ class Teacher extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'surname'], 'string', 'max' => 255],
+            [
+                ['name', 'surname'],
+                'string',
+                'max' => 255
+            ],
+            [
+                ['name', 'surname'],
+                'required',
+                'message'=>'{attribute} не может быть пустым'
+            ]
         ];
     }
 
@@ -49,6 +58,16 @@ class Teacher extends \yii\db\ActiveRecord
      */
     public function getStudentGroupeCourseWithTeachers()
     {
-        return $this->hasMany(StudentGroupeCourseWithTeacher::className(), ['teacherId' => 'id']);
+        return $this->hasMany(NominatedCourses::className(), ['teacherId' => 'id']);
+    }
+
+    /**
+     * Получаем всех преподователей.
+     *
+     * @return array|ActiveRecord[]
+     */
+    public static function getTeachers()
+    {
+        return self::find()->all();
     }
 }

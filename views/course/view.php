@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Course */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Courses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="course-view">
@@ -32,5 +32,4 @@ $this->params['breadcrumbs'][] = $this->title;
             'duration',
         ],
     ]) ?>
-
 </div>

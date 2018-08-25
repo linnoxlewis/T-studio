@@ -2,11 +2,11 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
+use Yii;
 
 /**
- * This is the model class for table "student".
+ * Модель таблицы "Student".
  *
  * @property int $id
  * @property string $name
@@ -26,6 +26,17 @@ class Student extends ActiveRecord
      */
     public $prePhoto;
     /**
+     * Событие добавления студента
+     */
+    public const EVENT_ADD_NEW_STUDENT = '';
+    /**
+     * Событие удаление студента
+     *
+     * @var string
+     */
+    public const EVENT_REMOVE_STUDENT = '';
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
@@ -39,10 +50,35 @@ class Student extends ActiveRecord
     public function rules()
     {
         return [
-            [['groupId'], 'integer'],
-            [['photo'], 'string'],
-            [['name', 'surname'], 'string', 'max' => 255],
-            [['groupId'], 'exist', 'skipOnError' => true, 'targetClass' => Group::className(), 'targetAttribute' => ['groupId' => 'id']],
+            [
+                ['name', 'surname'],
+                'required',
+                'message'=>'{attribute} не может быть пустым'
+            ],
+            [
+                ['prePhoto'],
+                'file',
+                'extensions' => 'jpg, gif, png'
+            ],
+            [
+                ['groupId'],
+                'integer'
+            ],
+            [
+                ['photo'],
+                'string'
+            ],
+            [
+                ['name', 'surname'],
+                'string',
+                'max' => 255
+            ],
+            [
+                ['groupId'],
+                'exist',
+                'skipOnError' => true, 'targetClass' => Group::className(),
+                'targetAttribute' => ['groupId' => 'id']
+            ],
         ];
     }
 
@@ -52,16 +88,11 @@ class Student extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'name' => 'Имя',
             'surname' => 'Фамилия',
             'groupId' => 'Группа',
             'photo' => 'Фото',
         ];
-    }
-    public function afterFind()
-    {
-        $this->groupId = $this->group->name;
     }
 
     /**
@@ -70,5 +101,22 @@ class Student extends ActiveRecord
     public function getGroup()
     {
         return $this->hasOne(Group::className(), ['id' => 'groupId']);
+    }
+
+    /**
+     * Вывод названия группы после выборки
+     */
+    public function afterFind()
+    {
+        $this->groupId = $this->group->name;
+    }
+
+    /**
+     * Логирование удаления студента
+     */
+    public function afterDelete()
+    {
+        $messageLog = "Студент " . $this->name . " " . $this->surname . " удален";
+        $this->on(Student::EVENT_ADD_NEW_STUDENT, [$this, Yii::info($messageLog, 'student')]);
     }
 }

@@ -6,7 +6,7 @@ use app\models\SearchTeacher;
 use app\models\Teacher;
 
 /**
- * TeacherController implements the CRUD actions for Student model.
+ * Контроллер для работы с преподователями.
  */
 class TeacherController extends CommonController
 {

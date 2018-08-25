@@ -21,14 +21,13 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'photo')->textarea()->hiddenInput()->label("") ?>
 
-    <?= $form->field($model, 'prePhoto')->fileInput() ?>
+    <?= $form->field($model, 'prePhoto')->fileInput()->label("Загрузить фото") ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
 
 <div>

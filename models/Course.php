@@ -2,17 +2,16 @@
 
 namespace app\models;
 
-use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "course".
+ * Модель курсов
  *
  * @property int $id
  * @property string $name
  * @property int $duration
  *
- * @property StudentGroupeCourseWithTeacher[] $studentGroupeCourseWithTeachers
+ * @property NominatedCourses[] $nominatedCourses
  */
 class Course extends ActiveRecord
 {
@@ -30,8 +29,20 @@ class Course extends ActiveRecord
     public function rules()
     {
         return [
-            [['duration'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [
+                ['name','duration'],
+                'required',
+                'message'=>'{attribute} не может быть пустым'
+            ],
+            [
+                ['duration'],
+                'integer'
+            ],
+            [
+                ['name'],
+                'string',
+                'max' => 255
+            ],
         ];
     }
 
@@ -42,7 +53,7 @@ class Course extends ActiveRecord
     {
         return [
             'name' => 'Название курса',
-            'duration' => 'Продолжительность курса',
+            'duration' => 'Продолжительность курса(в часах)',
         ];
     }
 
@@ -51,6 +62,16 @@ class Course extends ActiveRecord
      */
     public function getStudentGroupeCourseWithTeachers()
     {
-        return $this->hasMany(StudentGroupeCourseWithTeacher::className(), ['courseId' => 'id']);
+        return $this->hasMany(SearchNominatedCourses::className(), ['courseId' => 'id']);
+    }
+
+    /**
+     * Получаем все имеющийся курсы.
+     *
+     * @return array|ActiveRecord[]
+     */
+    public static function getCourses()
+    {
+        return static::find()->all();
     }
 }
