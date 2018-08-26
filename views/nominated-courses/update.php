@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Редактировать назначенный курс';
 $this->params['breadcrumbs'][] = ['label' => 'Назначенный курс', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Курс '. $model->group->name . '/'.$model->course->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="nominated-courses-update">

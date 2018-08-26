@@ -35,6 +35,11 @@ class Course extends ActiveRecord
                 'message'=>'{attribute} не может быть пустым'
             ],
             [
+                ['name'],
+                'unique',
+                'message'=>'{attribute} уже присутствует в системе'
+            ],
+            [
                 ['duration'],
                 'integer'
             ],
