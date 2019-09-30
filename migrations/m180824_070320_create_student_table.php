@@ -12,10 +12,10 @@ class m180824_070320_create_student_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('student', [
+        $this->createTable('{{%student}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(),
-            'surname' => $this->string(),
+            'name' => $this->string()->notNull(),
+            'surname' => $this->string()->notNull(),
             'groupId' => $this->integer(),
             'photo' => $this->getDb()->getSchema()->createColumnSchemaBuilder('longtext'),
         ]);
@@ -26,6 +26,6 @@ class m180824_070320_create_student_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('student');
+        $this->dropTable('{{%student}}');
     }
 }

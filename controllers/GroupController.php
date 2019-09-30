@@ -7,6 +7,10 @@ use app\models\SearchGroup;
 
 /**
  * Контроллер для работы с группами.
+ *
+ * Class GroupController
+ *
+ * @package app\controllers
  */
 class GroupController extends CommonController
 {
@@ -28,22 +32,5 @@ class GroupController extends CommonController
     protected function getSearchModelName():string
     {
         return SearchGroup::class;
-    }
-
-    /**
-     * Возвращает модель
-     *
-     * @param int|null $id
-     *
-     * @return Group
-     */
-    protected function getModel(int $id = null): Group
-    {
-        if (null == $id){
-            $modelName = $this->getModelName();
-            return new $modelName;
-        }
-
-        return $this->findModel($id);
     }
 }

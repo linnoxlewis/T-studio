@@ -12,7 +12,7 @@ class m180824_072600_create_studentGroupeCourseWithTeacher_table extends Migrati
      */
     public function safeUp()
     {
-        $this->createTable('studentGroupCourseWithTeacher', [
+        $this->createTable('{{%studentGroupCourseWithTeacher}}', [
             'id' => $this->primaryKey(),
             'teacherId' => $this->integer(),
             'groupId' => $this->integer(),
@@ -61,6 +61,6 @@ class m180824_072600_create_studentGroupeCourseWithTeacher_table extends Migrati
      */
     public function safeDown()
     {
-        $this->dropTable('StudentGroupCourseWithTeacher');
+        $this->dropTable('{{%studentGroupCourseWithTeacher}}');
     }
 }

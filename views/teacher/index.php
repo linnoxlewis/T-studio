@@ -11,13 +11,8 @@ $this->title = 'Преподаватели';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="teacher-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Добавить преподавателя', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+    <p><?= Html::a('Добавить преподавателя', ['create'], ['class' => 'btn btn-success']) ?></p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [

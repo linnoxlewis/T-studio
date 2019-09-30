@@ -11,13 +11,8 @@ $this->title = 'Назначенные курсы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="nominated-courses-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Назначить курс', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+    <p><?= Html::a('Назначить курс', ['create'], ['class' => 'btn btn-success']) ?></p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,

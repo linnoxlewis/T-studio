@@ -12,7 +12,7 @@ class m180824_071025_create_group_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('group', [
+        $this->createTable('{{%group}}', [
             'id' => $this->primaryKey(),
             'name' => $this->string()->notNull(),
         ]);
@@ -23,6 +23,6 @@ class m180824_071025_create_group_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('group');
+        $this->dropTable('{{%group}}');
     }
 }

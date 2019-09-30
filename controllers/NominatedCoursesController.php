@@ -4,10 +4,15 @@ namespace app\controllers;
 
 use app\models\nominatedCourses;
 use app\models\SearchNominatedCourses;
+use app\models\Status;
 use Yii;
 
 /**
  * Контроллер для работы с назначением занятий.
+ *
+ * Class NominatedCoursesController
+ *
+ * @package app\controllers
  */
 class NominatedCoursesController extends CommonController
 {
@@ -19,20 +24,18 @@ class NominatedCoursesController extends CommonController
     public function actionCreate()
     {
         $groupId = null;
-
-        if(Yii::$app->request->get('idGroup') !== null)
-        {
+        if (Yii::$app->request->get('idGroup') !== null) {
             $groupId = Yii::$app->request->get("idGroup");
         }
         $model = $this->getModel();
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->statusId = 1;
-           if($model->save()){
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->statusId = Status::IN_PROCESS;
+            if ($model->save())
+            {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-
         return $this->render('create', [
             'model' => $model,
             'group' => $groupId,
@@ -60,23 +63,6 @@ class NominatedCoursesController extends CommonController
     }
 
     /**
-     * Возвращает модель
-     *
-     * @param int|null $id
-     *
-     * @return NominatedCourses
-     */
-    protected function getModel(int $id = null): NominatedCourses
-    {
-        if (null == $id) {
-            $modelName = $this->getModelName();
-            return new $modelName;
-        }
-
-        return $this->findModel($id);
-    }
-
-    /**
      * Установление статуса у занятия.
      *
      * @param int $id id занятия.
@@ -86,17 +72,16 @@ class NominatedCoursesController extends CommonController
     public function actionSetStatus(int $id)
     {
         $model = NominatedCourses::findOne($id);
-
-        if(Yii::$app->request->isPost)
+        if (Yii::$app->request->isPost)
         {
             $model->statusId = Yii::$app->request->post()['NominatedCourses']['statusId'];;
-            if($model->save()) {
+            if ($model->save())
+            {
                 return $this->redirect(['index']);
             }
         }
         return $this->render('set-status', [
             'model' => $model,
         ]);
-
     }
 }

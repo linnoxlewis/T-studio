@@ -10,23 +10,15 @@ use yii\helpers\ArrayHelper;
 ?>
 
 <div class="student-form">
-
     <?php $form = ActiveForm::begin(); ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'groupId')->dropDownList(ArrayHelper::map(\app\models\Group::getGroups(), 'id', 'name')); ?>
-
+    <?= $form->field($model, 'groupId')->dropDownList(ArrayHelper::map(\app\models\Group::find()->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'photo')->textarea()->hiddenInput()->label("") ?>
-
     <?= $form->field($model, 'prePhoto')->fileInput()->label("Загрузить фото") ?>
-
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 </div>
 

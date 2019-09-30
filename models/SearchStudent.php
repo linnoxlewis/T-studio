@@ -2,12 +2,14 @@
 
 namespace app\models;
 
-
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
  * Поисковая модель Студентов.
+ *
+ * Class SearchStudent
+ *
+ * @package app\models
  */
 class SearchStudent extends Student
 {
@@ -29,14 +31,6 @@ class SearchStudent extends Student
     }
 
     /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        return Model::scenarios();
-    }
-
-    /**
      * Создание датапровайдера.
      *
      * @param array $params
@@ -46,26 +40,20 @@ class SearchStudent extends Student
     public function search($params)
     {
         $query = Student::find();
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             return $dataProvider;
         }
-
         $query->andFilterWhere([
             'id' => $this->id,
             'groupId' => $this->groupId,
         ]);
-
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'surname', $this->surname])
             ->andFilterWhere(['like', 'photo', $this->photo]);
-
         return $dataProvider;
     }
 
@@ -78,15 +66,10 @@ class SearchStudent extends Student
      */
     public function searchStudent(int $id)
     {
-        $query = Student::find()
-            ->where([
-                "groupId"=>$id
-            ]);
-
+        $query = Student::find()->where(["groupId"=>$id]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         return $dataProvider;
     }
 }

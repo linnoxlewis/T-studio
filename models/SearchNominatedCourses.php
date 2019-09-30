@@ -2,13 +2,14 @@
 
 namespace app\models;
 
-
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
-
 
 /**
  * Поисковая модель занятий
+ *
+ * Class SearchNominatedCourses
+ *
+ * @package app\models
  */
 class SearchNominatedCourses extends NominatedCourses
 {
@@ -26,14 +27,6 @@ class SearchNominatedCourses extends NominatedCourses
     }
 
     /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        return Model::scenarios();
-    }
-
-    /**
      * Создание датапровайдера
      *
      * @param array $params
@@ -43,17 +36,13 @@ class SearchNominatedCourses extends NominatedCourses
     public function search($params)
     {
         $query = nominatedCourses::find();
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             return $dataProvider;
         }
-
         $query->andFilterWhere([
             'id' => $this->id,
             'teacherId' => $this->teacherId,
@@ -61,7 +50,6 @@ class SearchNominatedCourses extends NominatedCourses
             'courseId' => $this->courseId,
             'statusId' => $this->statusId
         ]);
-
         return $dataProvider;
     }
 }

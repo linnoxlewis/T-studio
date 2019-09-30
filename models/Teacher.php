@@ -10,7 +10,6 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $name
  * @property string $surname
- *
  * @property NominatedCourses $studentGroupeCourseWithTeachers
  */
 class Teacher extends ActiveRecord
@@ -20,7 +19,7 @@ class Teacher extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'teacher';
+        return '{{%teacher}}';
     }
 
     /**
@@ -59,15 +58,5 @@ class Teacher extends ActiveRecord
     public function getStudentGroupeCourseWithTeachers()
     {
         return $this->hasMany(NominatedCourses::className(), ['teacherId' => 'id']);
-    }
-
-    /**
-     * Получаем всех преподователей.
-     *
-     * @return array|ActiveRecord[]
-     */
-    public static function getTeachers()
-    {
-        return self::find()->all();
     }
 }

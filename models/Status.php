@@ -1,8 +1,8 @@
 <?php
 
 namespace app\models;
+use yii\base\Model;
 
-use yii\db\ActiveRecord;
 /**
  * Модель таблицы "status".
  *
@@ -11,55 +11,53 @@ use yii\db\ActiveRecord;
  *
  * @property NominatedCourses[] $studentGroupCourseWithTeachers
  */
-class Status extends ActiveRecord
+class Status extends Model
 {
     /**
-     * @inheritdoc
+     * Статус "На согласовании".
+     *
+     * @var int
      */
-    public static function tableName()
-    {
-        return 'status';
-    }
+    const IN_PROCESS = 1;
 
     /**
-     * @inheritdoc
+     * Статус согласован
+     *
+     * @var int
+     */
+    const APPROVED = 2;
+
+    /**
+     * Статус отклонен
+     *
+     * @var int
+     */
+    const REJECTED = 3;
+
+    /**
+     * Правила валидации.
+     *
+     * @return array
      */
     public function rules()
     {
         return [
-            [
-                ['name'],
-                'string',
-                'max' => 255
-            ],
+            ['id', 'in', 'range' => [static::IN_PROCESS,static::APPROVED,static::REJECTED]],
+            ['id', 'required'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * Лист значений.
+     *
+     * @return array
      */
-    public function attributeLabels()
+    public static function getList()
     {
         return [
-            'name' => 'Статус',
+            static::IN_PROCESS => "На согласовании",
+            static::APPROVED => "Согласовано",
+            static::REJECTED=> "'Отклонено'",
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStudentGroupCourseWithTeachers()
-    {
-        return $this->hasMany(NominatedCourses::className(), ['statusId' => 'id']);
-    }
-
-    /**
-     * Получаем все статусы.
-     *
-     * @return array|ActiveRecord[]
-     */
-    public static function getStatus()
-    {
-        return self::find()->all();
     }
 }

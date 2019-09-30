@@ -9,7 +9,6 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $name
- *
  * @property Student[] $students
  * @property nominatedCourses[] $studentGroupeCourseWithTeachers
  */
@@ -20,7 +19,7 @@ class Group extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'group';
+        return '{{%group}}';
     }
 
     /**
@@ -72,30 +71,5 @@ class Group extends ActiveRecord
     public function getStudentGroupeCourseWithTeachers()
     {
         return $this->hasMany(nominatedCourses::className(), ['groupId' => 'id']);
-    }
-
-    /**
-     * Получаем все имеющийся группы.
-     *
-     * @return array|ActiveRecord[]
-     */
-    public static function getGroups()
-    {
-        return static::find()->all();
-    }
-
-    /**
-     * Поиск группы по его id.
-     *
-     * @param int $groupId id группы.
-     *
-     * @return array|ActiveRecord[]
-     */
-    public static function getGroup(int $groupId)
-    {
-        return static::find()
-            ->where([
-                'id'=>$groupId
-            ])->all();
     }
 }

@@ -12,10 +12,10 @@ class m180824_071822_create_teacher_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('teacher', [
+        $this->createTable('{{%teacher}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(),
-            'surname' => $this->string(),
+            'name' => $this->string()->notNull(),
+            'surname' => $this->string()->notNull(),
         ]);
     }
 
@@ -24,6 +24,6 @@ class m180824_071822_create_teacher_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('teacher');
+        $this->dropTable('{{%teacher}}');
     }
 }

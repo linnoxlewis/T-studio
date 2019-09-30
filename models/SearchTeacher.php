@@ -1,8 +1,6 @@
 <?php
 
 namespace app\models;
-
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -28,14 +26,6 @@ class SearchTeacher extends Teacher
     }
 
     /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        return Model::scenarios();
-    }
-
-    /**
      * Creates data provider instance with search query applied
      *
      * @param array $params
@@ -45,24 +35,18 @@ class SearchTeacher extends Teacher
     public function search($params)
     {
         $query = Teacher::find();
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             return $dataProvider;
         }
-
         $query->andFilterWhere([
             'id' => $this->id,
         ]);
-
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'surname', $this->surname]);
-
         return $dataProvider;
     }
 }

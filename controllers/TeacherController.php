@@ -7,6 +7,10 @@ use app\models\Teacher;
 
 /**
  * Контроллер для работы с преподователями.
+ *
+ * Class TeacherController
+ *
+ * @package app\controllers
  */
 class TeacherController extends CommonController
 {
@@ -28,22 +32,5 @@ class TeacherController extends CommonController
     protected function getSearchModelName():string
     {
         return SearchTeacher::class;
-    }
-
-    /**
-     * Возвращает модель
-     *
-     * @param int|null $id
-     *
-     * @return Teacher
-     */
-    protected function getModel(int $id = null): Teacher
-    {
-        if (null == $id){
-            $modelName = $this->getModelName();
-            return new $modelName;
-        }
-
-        return $this->findModel($id);
     }
 }

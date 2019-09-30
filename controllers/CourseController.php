@@ -5,9 +5,12 @@ namespace app\controllers;
 use app\models\Course;
 use app\models\SearchCourse;
 
-
 /**
- * Контроллер для работы с курсами.
+ * Контроллер для работы с курсами
+ *
+ * Class CourseController
+ *
+ * @package app\controllers
  */
 class CourseController extends CommonController
 {
@@ -29,22 +32,5 @@ class CourseController extends CommonController
     protected function getSearchModelName():string
     {
         return SearchCourse::class;
-    }
-
-    /**
-     * Возвращает модель
-     *
-     * @param int|null $id
-     *
-     * @return Course
-     */
-    protected function getModel(int $id = null): Course
-    {
-        if (null == $id){
-            $modelName = $this->getModelName();
-            return new $modelName;
-        }
-
-        return $this->findModel($id);
     }
 }

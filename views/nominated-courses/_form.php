@@ -11,21 +11,15 @@ use yii\helpers\ArrayHelper;
 
 <div class="nominated-courses-form">
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'teacherId')->dropDownList(ArrayHelper::map(\app\models\Teacher::getTeachers(), 'id', 'surname')); ?>
-
+    <?= $form->field($model, 'teacherId')->dropDownList(ArrayHelper::map(\app\models\Teacher::find()->all(), 'id', 'surname')); ?>
     <?php if($group == null) { ?>
-    <?= $form->field($model, 'groupId')->dropDownList(ArrayHelper::map(\app\models\Group::getGroups(), 'id', 'name')); ?>
+    <?= $form->field($model, 'groupId')->dropDownList(ArrayHelper::map(\app\models\Group::find()->all(), 'id', 'name')); ?>
     <?php } else { ?>
-    <?= $form->field($model, 'groupId')->dropDownList(ArrayHelper::map(\app\models\Group::getGroup($group), 'id', 'name'),['selected' => true]);
+    <?= $form->field($model, 'groupId')->dropDownList(ArrayHelper::map(\app\models\Group::find()->where(['id'=>$group])->all(), 'id', 'name'),['selected' => true]);
     } ?>
-
-    <?= $form->field($model, 'courseId')->dropDownList(ArrayHelper::map(\app\models\Course::getCourses(), 'id', 'name')); ?>
-
+    <?= $form->field($model, 'courseId')->dropDownList(ArrayHelper::map(\app\models\Course::find()->all(), 'id', 'name')); ?>
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
-
 </div>

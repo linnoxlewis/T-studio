@@ -12,7 +12,6 @@ use yii\db\ActiveRecord;
  * @property int $groupId
  * @property int $courseId
  * @property string $status
- *
  * @property Course $course
  * @property Group $group
  * @property Teacher $teacher

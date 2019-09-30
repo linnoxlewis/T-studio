@@ -20,7 +20,7 @@ class Course extends ActiveRecord
      */
     public static function tableName()
     {
-        return 'course';
+        return '{{%course}}';
     }
 
     /**
@@ -68,15 +68,5 @@ class Course extends ActiveRecord
     public function getStudentGroupeCourseWithTeachers()
     {
         return $this->hasMany(SearchNominatedCourses::className(), ['courseId' => 'id']);
-    }
-
-    /**
-     * Получаем все имеющийся курсы.
-     *
-     * @return array|ActiveRecord[]
-     */
-    public static function getCourses()
-    {
-        return static::find()->all();
     }
 }

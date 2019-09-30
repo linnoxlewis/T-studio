@@ -9,7 +9,11 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * Базовый контроллер для CRUD операций.
+ * Базовый контроллер
+ *
+ * Class CommonController
+ *
+ * @package app\controllers
  */
 abstract class CommonController extends Controller
 {
@@ -37,9 +41,7 @@ abstract class CommonController extends Controller
     {
         $searchModel = $this->getSearchModelName();
         $searchModel = new $searchModel;
-
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -51,7 +53,8 @@ abstract class CommonController extends Controller
      *
      * @param integer $id id записи.
      *
-     * @return mixed
+     * @return string
+     * @throws NotFoundHttpException
      */
     public function actionView(int $id)
     {
@@ -68,32 +71,27 @@ abstract class CommonController extends Controller
     public function actionCreate()
     {
         $model = $this->getModel();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
-
     }
 
     /**
      * Обновляет текущую запись модели.
      *
-     * @param int $id
+     * @param integer $id id записи.
      *
      * @return string|\yii\web\Response
      */
     public function actionUpdate(int $id)
     {
         $model = $this->getModel($id);
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' =>$model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -102,7 +100,7 @@ abstract class CommonController extends Controller
     /**
      * Удаляет текущую запись модели.
      *
-     * @param int $id  id записи
+     * @param int $id id записи
      *
      * @return \yii\web\Response
      *
@@ -112,6 +110,22 @@ abstract class CommonController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * Возвращает модель
+     *
+     * @param int|null $id
+     *
+     * @return ActiveRecord
+     */
+    protected function getModel(int $id = null)
+    {
+        if (null == $id){
+            $modelName = $this->getModelName();
+            return new $modelName;
+        }
+        return $this->findModel($id);
     }
 
     /**
@@ -131,11 +145,9 @@ abstract class CommonController extends Controller
             $model,
             'findOne',
         ], $id);
-
         if ($result !== null) {
             return $result;
         }
-
         throw new NotFoundHttpException('Страница не найдена.');
     }
 
@@ -152,13 +164,4 @@ abstract class CommonController extends Controller
      * @return string
      */
     abstract protected function getSearchModelName():string;
-
-    /**
-     * Возвращает промежуточную модель для работы с основной.
-     *
-     * @param int|null $id
-     *
-     * @return Model
-     */
-    abstract protected function getModel(int $id = null);
 }

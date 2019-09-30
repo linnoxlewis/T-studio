@@ -2,11 +2,14 @@
 
 namespace app\models;
 
-use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
  * Поисковая модель курсов.
+ *
+ * Class SearchCourse
+ *
+ * @package app\models
  */
 class SearchCourse extends Course
 {
@@ -20,15 +23,6 @@ class SearchCourse extends Course
             [['name'], 'safe'],
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
-    {
-        return Model::scenarios();
-    }
-
     /**
      * СОздание датапровайдера.
      *
@@ -39,24 +33,18 @@ class SearchCourse extends Course
     public function search($params)
     {
         $query = Course::find();
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
-
         if (!$this->validate()) {
             return $dataProvider;
         }
-
         $query->andFilterWhere([
             'id' => $this->id,
             'duration' => $this->duration,
         ]);
-
         $query->andFilterWhere(['like', 'name', $this->name]);
-
         return $dataProvider;
     }
 }

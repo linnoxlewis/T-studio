@@ -12,10 +12,10 @@ class m180824_071830_create_course_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('course', [
+        $this->createTable('{{%course}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->string(),
-            'duration'=> $this->integer(),
+            'name' => $this->string()->notNull(),
+            'duration'=> $this->integer()->notNull(),
         ]);
     }
 
@@ -24,6 +24,6 @@ class m180824_071830_create_course_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('course');
+        $this->dropTable('{{%course}}');
     }
 }

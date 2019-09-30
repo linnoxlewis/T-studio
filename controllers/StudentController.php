@@ -8,6 +8,10 @@ use Yii;
 
 /**
  * Контроллер для работы со студентами.
+ *
+ * Class StudentController
+ *
+ * @package app\controllers
  */
 class StudentController extends CommonController
 {
@@ -32,23 +36,6 @@ class StudentController extends CommonController
     }
 
     /**
-     * Возвращает модель
-     *
-     * @param int|null $id
-     *
-     * @return Student
-     */
-    protected function getModel(int $id = null): Student
-    {
-        if (null == $id) {
-            $modelName = $this->getModelName();
-            return new $modelName;
-        }
-
-        return $this->findModel($id);
-    }
-
-    /**
      * Создаёт новую модель студента.Перегружаем метод базового контроллера ввиду добавления логики логирования.
      *
      * @return string|\yii\web\Response
@@ -56,14 +43,12 @@ class StudentController extends CommonController
     public function actionCreate()
     {
         $model = new Student();
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $messageLog = "Студент " . $model->name . " " . $model->surname . " добавлен";
             $this->on(Student::EVENT_ADD_NEW_STUDENT, [$this, Yii::info($messageLog, 'student')]);
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -84,6 +69,5 @@ class StudentController extends CommonController
         return $this->render('studentInGroup', [
             'dataProvider' => $dataProvider,
         ]);
-
     }
 }
